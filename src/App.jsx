@@ -2,6 +2,26 @@ import React from 'react'
 import './App.css'
 
 const App = () => {
+  // Facebook Pixel event tracking
+  const trackEvent = (eventName, eventData = {}) => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', eventName, eventData)
+    }
+  }
+
+  const handleButtonClick = (buttonType) => {
+    trackEvent('Lead', {
+      content_name: buttonType,
+      content_category: 'App Download'
+    })
+  }
+
+  const handleCardClick = (streamerName) => {
+    trackEvent('ViewContent', {
+      content_name: streamerName,
+      content_category: 'Streamer Card'
+    })
+  }
   const streamers = [
     {
       id: 1,
@@ -61,6 +81,7 @@ const App = () => {
             target="_blank" 
             rel="noopener noreferrer"
             className="open-btn"
+            onClick={() => handleButtonClick('Open App Button')}
           >
             OPEN APP
           </a>
@@ -81,6 +102,7 @@ const App = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="streamer-card"
+            onClick={() => handleCardClick(streamer.name)}
           >
             <div className="card-image">
               <video 
@@ -173,6 +195,7 @@ const App = () => {
             target="_blank" 
             rel="noopener noreferrer"
             className="download-btn"
+            onClick={() => handleButtonClick('Download Button')}
           >
             DOWNLOAD
           </a>
